@@ -9,7 +9,7 @@ tbd.
 ## Code
 ### Configuration
 
-In the main Arduino Sketch [WifiRGB.ino](https://github.com/c-klinger/esp8266-arduino-wifirgb/blob/master/esp8266-arduino-wifirgb/WifiRGB.ino)WifiRGB.ino some changes need to be done before uploading to the ESP8266 microcontroller.
+In the main Arduino Sketch [WifiRGB.ino](https://github.com/c-klinger/esp8266-arduino-wifirgb/blob/master/esp8266-arduino-wifirgb/WifiRGB.ino) some changes need to be done before uploading to the ESP8266 microcontroller.
 
 #### Wifi Network Settings
 Required network settings are the Network SSID and password:
