@@ -3,8 +3,9 @@
 A RESTful API implementation to control an RGB LED Strip using an ESP8266 microcontroller. Supports RGB or HSV color model.
 
 ## Schematics
+![WifiRGB Schematics](https://github.com/c-klinger/esp8266-arduino-wifirgb/blob/master/schematics/wifirgb_schematics.png.png "WifiRGB Schematics")
 
-tbd.
+The circuit uses an LD1117V33 voltage regulator with two capacitors as specified in the datasheet. The connection of the ESP-12 is spoecified in th the [improved stability schematic](https://github.com/esp8266/Arduino/blob/master/doc/ESP_improved_stability.png) of the [ESP8266 for Arduino](https://github.com/esp8266/Arduino/). Three IRLB8721 N-channel MOSFETs (one per RGB Stripe channel) are used as power transistors to save our ESP-12 from an early death. The two tactile switches are added for easier programming.
 
 ## Code
 ### Configuration
