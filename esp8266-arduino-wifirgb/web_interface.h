@@ -48,11 +48,11 @@ const char WEBINTERFACE[] PROGMEM = R"=====(
       //if (changes.h) {
       //  console.log(color.hsv);
       //}
-      var json = {state:"ON",brightness:color.hsv.v,color:{r:color.rgb.r,g:color.rgb.g,b:color.rgb.b},mode:"SOLID"};
+      var json = {state:"ON",brightness:color.hsv.v,color:{mode:"rgb",r:color.rgb.r,g:color.rgb.g,b:color.rgb.b},mode:"SOLID"};
       console.log(json);
       console.log(JSON.stringify(json));
 
-      $.ajax( "/api/v1/state", { data: JSON.stringify(json), dataType: "json", method: "POST", contentType: "application/json"})
+      $.ajax( "/api/v1/state", { data: JSON.stringify(json), dataType: "json", method: "POST", contentType: "application/json", cache: false, timeout: 2000})
         .done(function( data ) {
           console.log( "Response: " );
           console.log( data );
