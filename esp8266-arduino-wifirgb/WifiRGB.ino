@@ -5,6 +5,7 @@
 #include <ArduinoJson.h>
 
 #include "names.h"
+#include "web_admin.h"
 #include "web_interface.h"
 #include "web_iro_js.h"
 
@@ -65,6 +66,9 @@ void setup(void) {
   // iro.js User Interface and Javascript
   server.on("/ui", HTTP_GET, []() {
     server.send(200, "text/html", WEBINTERFACE);
+  });
+  server.on("/admin", HTTP_GET, []() {
+    server.send(200, "text/html", WEBADMIN);
   });
   server.on("/iro.min.js", HTTP_GET, []() {
     server.send(200, "application/javascript", IRO_JS);
