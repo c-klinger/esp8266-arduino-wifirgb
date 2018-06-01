@@ -56,12 +56,10 @@ void setup(void) {
   // see https://esp8266.github.io/Arduino/versions/2.0.0/doc/reference.html#analog-output
   analogWriteRange(255);
 
+  resetOutputs();
   // Root and 404
   server.on("/", handleRoot);
   server.onNotFound(handleNotFound);
-
-  // REST-API
-  server.on("/api/v1/state", HTTP_POST, handleApiRequest);
 
   // iro.js User Interface and Javascript
   server.on("/ui", HTTP_GET, []() {
@@ -73,6 +71,10 @@ void setup(void) {
   server.on("/iro.min.js", HTTP_GET, []() {
     server.send(200, "application/javascript", IRO_JS);
   });
+   
+  // REST-API
+  server.on("/api/v1/state", HTTP_POST, handleApiRequest);
+  server.on("/api/v1/reset", HTTP_GET, resetOutputs);
 
   server.begin();
   Serial.println("WifiRGB HTTP server started");
@@ -183,6 +185,16 @@ void handleApiRequest() {
     analogWrite(BLUEPIN, mappedBlue);
 
     server.send(200, "application/json", server.arg("plain"));
+}
+
+void resetOutputs() {
+  analogWrite(REDPIN, 255);
+  analogWrite(GREENPIN, 255);
+  analogWrite(BLUEPIN, 255);
+  
+  analogWrite(REDPIN, 0);
+  analogWrite(GREENPIN, 0);
+  analogWrite(BLUEPIN, 0);
 }
 
 // this is a modified version of https://gist.github.com/hdznrrd/656996
