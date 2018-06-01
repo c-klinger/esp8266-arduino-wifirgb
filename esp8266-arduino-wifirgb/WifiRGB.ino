@@ -107,12 +107,40 @@ void handleNotFound() {
 
 void handleApiRequest() {
 
+  Serial.println("### API Request:");
+    /* 
+    // DEBUG CODE
+    String headers;
+    headers += "HTTP Headers:\n";
+    headers += server.headers();
+    headers += "\n";
+
+    for (uint8_t i = 0; i < server.headers(); i++) {
+      headers += " " + server.headerName(i) + ": " + server.header(i) + "\n";
+    }
+    Serial.println(headers);
+    */
     if (server.hasArg("plain") == false) { //Check if body received
       server.send(200, "text/plain", "Body not received");
       return;
     }
 
-    DynamicJsonBuffer jsonBuffer(190);
+    /*
+    // DEBUG CODE
+    String message;
+    headers += "HTTP args:\n";
+    message += server.args();
+    message += "\n";
+
+    for (uint8_t i = 0; i < server.args(); i++) {
+      message += " " + server.argName(i) + ": " + server.arg(i) + "\n";
+    }
+    Serial.println(message);
+    Serial.println(server.arg("plain"));
+    */
+    
+    const size_t bufferSize = JSON_OBJECT_SIZE(3) + JSON_OBJECT_SIZE(4) + 70;
+    DynamicJsonBuffer jsonBuffer(bufferSize);
     JsonObject& root = jsonBuffer.parseObject(server.arg("plain"));
 
     Serial.println("JSON Body: ");
@@ -121,7 +149,7 @@ void handleApiRequest() {
 
     const char* state = root["state"]; // "ON" or "OFF"
     if(strcmp("OFF", state) == 0) {
-       Serial.println("Switching OFF!");
+       Serial.println("State OFF found: switching off");
       // Set Output
       analogWrite(REDPIN, 0);
       analogWrite(GREENPIN, 0);
@@ -135,22 +163,30 @@ void handleApiRequest() {
     Serial.print("Brightness: ");
     Serial.println(brightness);
 
-    RGB rgb = {0, 0, 0};
-
+    // DEBUG: color
+    Serial.print("Color: ");
     root["color"].printTo(Serial);
+    Serial.println();
 
+    RGB rgb = {0, 0, 0};
+    JsonObject& color = root["color"];
+        
     // If RGB mode: Parse RGB values
-    if(strcmp("rgb", root["color"]["mode"]) == 0) {
+    if(color["mode"] == "rgb") { 
+      // Indeed, the JsonVariant returned by root["..."] has a special implementation of the == operator that knows how to compare string safely. 
+      // See https://arduinojson.org/faq/why-does-my-device-crash-or-reboot/
       Serial.println("Reading RGB values...");
-      rgb.r = root["color"]["r"];
-      rgb.b = root["color"]["g"];
-      rgb.g = root["color"]["b"];
+      rgb.r = color["r"];
+      rgb.b = color["b"];
+      rgb.g = color["g"];
     }
 
-    // Parse HSV
-    if(strcmp("hsv", root["color"]["mode"]) == 0) {
+    // If HSV mode: Parse HSV values
+    if(color["mode"] == "hsv") {  
+      // Indeed, the JsonVariant returned by root["..."] has a special implementation of the == operator that knows how to compare string safely. 
+      // See https://arduinojson.org/faq/why-does-my-device-crash-or-reboot/
       Serial.println("Reading HSV values...");
-      rgb = hsvToRgb(root["color"]["h"], root["color"]["s"], root["color"]["v"]);
+      rgb = hsvToRgb(color["h"], color["s"], color["v"]);
     }
 
     // DEBUG: Parsed values
@@ -167,6 +203,7 @@ void handleApiRequest() {
     byte mappedGreen = map(rgb.g, 0, 100, 0, brightness);
     byte mappedBlue = map(rgb.b, 0, 100, 0, brightness);
 
+    // DEBUG: Brighness Mapped values
     Serial.println("Brighness Mapped RGB Values:");
     Serial.print("r=");
     Serial.print(mappedRed);
