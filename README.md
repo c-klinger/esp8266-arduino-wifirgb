@@ -1,6 +1,6 @@
 # esp8266-arduino-wifirgb
 
-A RESTful API implementation to control an RGB LED Strip using an ESP8266 microcontroller. Supports RGB or HSV color model.
+A RESTful API implementation to control an RGB LED Strip using an ESP8266 microcontroller. Supports RGB or HSV color model. There is a [german post](https://chrisklinger.de/2018/05/arduino-esp8266-wifi-steuerung-fuer-einen-rgb-led-strip/) on my blog containing more details about the project.
 
 ## Schematics
 ![WifiRGB Schematics](https://github.com/c-klinger/esp8266-arduino-wifirgb/raw/master/schematics/wifirgb_schematics.png)
