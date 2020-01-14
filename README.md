@@ -10,8 +10,8 @@ The circuit uses an LD1117V33 voltage regulator with two capacitors as specified
 ## Code
 ### Dependencies
 The mentioned versions are tested, other may work as well but may lead to compile issues.
-* [esp8266 v.2.4.2](https://github.com/esp8266/Arduino) 
-* [ArduinoJSON v.5.13.3](https://github.com/bblanchon/ArduinoJson)
+* [esp8266 v.2.4.2](https://github.com/esp8266/Arduino)
+* [ArduinoJSON v.6.13.0](https://github.com/bblanchon/ArduinoJson)
 
 ### Configuration
 
