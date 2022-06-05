@@ -140,13 +140,14 @@ void handleApiRequest() {
     */
     
     const size_t bufferSize = JSON_OBJECT_SIZE(3) + JSON_OBJECT_SIZE(4) + 70;
-    DynamicJsonBuffer jsonBuffer(bufferSize);
-    JsonObject& root = jsonBuffer.parseObject(server.arg("plain"));
+    DynamicJsonDocument jsonDocument(bufferSize);
+    deserializeJson(jsonDocument, server.arg("plain"));
 
     Serial.println("JSON Body: ");
-    root.printTo(Serial);
+    serializeJson(jsonDocument, Serial);
     Serial.println();
 
+    JsonObject root = jsonDocument.as<JsonObject>();
     const char* state = root["state"]; // "ON" or "OFF"
     if(strcmp("OFF", state) == 0) {
        Serial.println("State OFF found: switching off");
@@ -165,12 +166,12 @@ void handleApiRequest() {
 
     // DEBUG: color
     Serial.print("Color: ");
-    root["color"].printTo(Serial);
+    serializeJson(root["color"], Serial);
     Serial.println();
 
     RGB rgb = {0, 0, 0};
-    JsonObject& color = root["color"];
         
+    JsonObject color = root["color"];
     // If RGB mode: Parse RGB values
     if(color["mode"] == "rgb") { 
       // Indeed, the JsonVariant returned by root["..."] has a special implementation of the == operator that knows how to compare string safely. 
