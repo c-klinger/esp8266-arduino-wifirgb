@@ -9,9 +9,14 @@ The circuit uses an LD1117V33 voltage regulator with two capacitors as specified
 
 ## Code
 ### Dependencies
-The mentioned versions are tested, other may work as well but may lead to compile issues.
-* [esp8266 v.2.4.2](https://github.com/esp8266/Arduino)
-* [ArduinoJSON v.6.13.0](https://github.com/bblanchon/ArduinoJson)
+The following dependencies have to be installed in Arduino IDE using library or board manager (see project readme) to compile this project. The mentioned versions are tested, other may work as well but may lead to compile issues.
+* [esp8266 v.3.0.2](https://github.com/esp8266/Arduino)
+* [ArduinoJSON v.6.19.4](https://github.com/bblanchon/ArduinoJson)
+
+The following dependencies will be loaded using a [CDN](https://en.wikipedia.org/wiki/Content_delivery_network) for the web ui. There is no need to install them, but an internet connection is needed for the ui to display.
+* [iro.js v.5.5.2](https://github.com/jaames/iro.js)
+* [jQuery v.3.6.0](https://github.com/jquery/jquery)
+
 
 ### Configuration
 
@@ -90,7 +95,7 @@ The controller accecpts POST request at http://ip-adress/api/v1/state. The reque
 
 ### Graphical User Interface
 
-A User Interface using [iro.js](https://github.com/jaames/iro.js) is available at http://ip-adress/ui. An Internet connection is required to load additional Javascript libraries from CDN.
+A User Interface using [iro.js](https://github.com/jaames/iro.js) is available at http://ip-adress/ui. An Internet connection is required to load additional Javascript libraries from CDN (see dependencies section).
 
 ## License
 Copyright (c) 2018 Chris Klinger. Licensed under MIT license, see  [LICENSE](https://github.com/c-klinger/esp8266-arduino-wifirgb/blob/master/LICENSE.md) for the full license.
