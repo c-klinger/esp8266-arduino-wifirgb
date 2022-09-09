@@ -7,7 +7,6 @@
 #include "names.h"
 #include "web_admin.h"
 #include "web_interface.h"
-#include "web_iro_js.h"
 
 const char* ssid = "your_ssid";
 const char* password = "your_wifi_password";
@@ -67,9 +66,6 @@ void setup(void) {
   });
   server.on("/admin", HTTP_GET, []() {
     server.send_P(200, "text/html", WEBADMIN);
-  });
-  server.on("/iro.min.js", HTTP_GET, []() {
-    server.send_P(200, "application/javascript", IRO_JS);
   });
    
   // REST-API
